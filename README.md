@@ -16,3 +16,4 @@ cd crudreact
 npm install
 npm start
 
+<img src='https://raw.githubusercontent.com/thesequencer/crud-mern/master/captura.png' />
