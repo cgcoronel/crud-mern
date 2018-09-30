@@ -1,0 +1,16 @@
+.container-item .card {
+	margin-top: 10px;
+	/*cursor:pointer;*/
+}
+
+.container-item .card:hover {
+    box-shadow: 0 1rem 3rem rgba(0,0,0,.175)!important;
+}
+
+.container-item .card-body {
+	min-height: 120px;
+}
+
+.container-item .btn {
+	margin:2px;
+}
