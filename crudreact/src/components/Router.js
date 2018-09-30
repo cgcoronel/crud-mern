@@ -9,6 +9,7 @@ import Items from './Item/Items';
 import SingleItem from './Item/SingleItem';
 import ItemForm from './Item/ItemForm';
 import Edit from './Item/Edit';
+import Error from './Error';
 
 class Router extends React.Component {
 
@@ -184,6 +185,7 @@ class Router extends React.Component {
 														/>
 												)
 										}}/>
+								<Route component={Error} />
 						</Switch>
 					</div>
 				</div>
