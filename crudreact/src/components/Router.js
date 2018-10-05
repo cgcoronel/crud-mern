@@ -5,6 +5,7 @@ import swal from 'sweetalert2';
 import API from './api';
 import Header from './Header/Header';
 import Navigation from './Navigation/Navigation';
+import Footer from './Footer';
 import Items from './Item/Items';
 import SingleItem from './Item/SingleItem';
 import ItemForm from './Item/ItemForm';
@@ -15,12 +16,30 @@ class Router extends React.Component {
 
 	state = {
 		items: [],
-		searchFilter: ''
+		searchFilter: '',
+		page: 1,
+	}
+
+	pagePrev = () => {
+		let page = this.state.page;
+				
+		if (page > 1)  page--;
+		this.setState({ page });
+
+		console.log(this.state.page);
+	}
+
+	pageNext = () => {
+		let page = this.state.page;		
+		
+		page++;
+		this.setState({ page });	
+		console.log(this.state.page);
 	}
 
 	componentDidMount(){
 		this.getItems();
-	}
+	}	
 
 	getItems = () => {
 		API.get('/items')
@@ -186,8 +205,13 @@ class Router extends React.Component {
 												)
 										}}/>
 								<Route component={Error} />
-						</Switch>
+						</Switch>						
 					</div>
+
+					<Footer
+								pagePrev={this.pagePrev}
+            					pageNext={this.pageNext}
+							/>
 				</div>
 			</BrowserRouter>
 		)
