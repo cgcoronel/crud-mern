@@ -1,18 +1,24 @@
 import React from 'react';
 import './Finder.css';
 
-class Finder extends React.Component {
+import {Context} from '../Provider';
 
-  find = (e) => {
-    const search = e.target.value;
-    this.props.searchItems(search);
-  }
+class Finder extends React.Component {
 
   render () {
     return (
-        <form className='finder'>
-          <input type='text' placeholder='Búsqueda' onChange={this.find} />
-        </form>
+      <Context.Consumer>
+        {
+          (value) => (
+            <form className='finder'>
+              <input type='text' placeholder='Búsqueda' onChange={()=>{
+                  this.value.searchItems(this.target.value)
+                }} />
+            </form>
+          )
+        }
+      </Context.Consumer>
+
     )
   }
 }
