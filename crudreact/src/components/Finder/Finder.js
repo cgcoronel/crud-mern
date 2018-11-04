@@ -1,20 +1,19 @@
 import React from 'react';
-import './Finder.css';
 
 import {Context} from '../Provider';
 
 class Finder extends React.Component {
+  search = React.createRef();
 
   render () {
     return (
       <Context.Consumer>
         {
           (value) => (
-            <form className='finder'>
-              <input type='text' placeholder='Búsqueda' onChange={()=>{
-                  this.value.searchItems(this.target.value)
+              <input ref={this.search} className="form-control mr-sm-2" type="search" placeholder="Buscar..." aria-label="Buscar..."
+                onChange={()=>{
+                  value.searchItems(this.search.current.value)
                 }} />
-            </form>
           )
         }
       </Context.Consumer>

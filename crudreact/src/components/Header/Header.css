@@ -1,0 +1,21 @@
+nav {
+    display: flex;
+    justify-content: space-between;
+}
+
+.carrito {
+    padding-left: 10px;
+}
+
+.carrito-icon {
+    width: 8%;
+    height: 8%;
+}
+.carrito:hover {
+    opacity: 0.8;
+}
+
+.carrito-items {
+    position: absolute;
+    margin-left: 30px;
+}

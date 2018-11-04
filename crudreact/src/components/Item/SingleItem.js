@@ -16,7 +16,7 @@ class SingleItem extends React.Component {
 					<div className="col-lg">
 						 <div className="card">
 								 <img className="card-img-top" src={`${URL}image/${image}`} alt={title} />
-							 </div>
+							</div>
 					 </div>
 					 <div className="col-lg">
 	 					 <div className="card">

@@ -44,7 +44,7 @@ class Item extends React.Component {
 			cancelButtonText: 'Cancelar'
 		}).then(
 			(result) => {
-				if (result.value) {
+				if (result.value) {					
 					this.props.addCart(_id);
 					swal(
 						'Agregado!',
@@ -61,7 +61,8 @@ class Item extends React.Component {
 		const {_id, title, image, valor} = this.props.info;
 
 		return (
-			 <div className="container-item col-sm-4">
+			 <div className="container-item col-sm-3">
+
 					<div className="card">
 		    			<img className="card-img-top" src={`${URL}image/${image}`} alt="Card cap" />
 		    			<div className="card-body">

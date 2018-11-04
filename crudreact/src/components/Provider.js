@@ -9,6 +9,7 @@ export { Context };
 class Provider extends React.Component {
 	state =  {
 		items: [],
+		result: [],
 		cart: [],
 		searchFilter: '',
 		page: 1,
@@ -110,8 +111,6 @@ class Provider extends React.Component {
 			);
 	}
 
-
-
 	addCart = (id) => {
 		const items = [...this.state.items];
 		const item = items.findIndex(item => id === item._id);
@@ -119,6 +118,32 @@ class Provider extends React.Component {
 		this.setState({
 			cart: [...this.state.cart, items[item]]
 		});
+	}
+
+	deleteCart = (id) => {
+		console.log(id);
+		const cart = [...this.state.cart];
+
+		this.setState({
+			cart: cart.filter(item => id !== item._id)
+		});
+	}
+
+	searchItems = (searchFilter) => {
+
+			const items = [...this.state.items];
+			let result = [];
+
+			if (searchFilter !== '') {
+				result = items.filter(item => (
+					item.title.toLowerCase().indexOf( searchFilter.toLowerCase() ) !== -1
+				));
+
+			} else {
+				result = items;
+			}
+
+			this.setState({ result, searchFilter });
 	}
 
 
@@ -130,7 +155,9 @@ class Provider extends React.Component {
 					deleteItem: this.deleteItem,
 					addCart: this.addCart,
 					addItem: this.addItem,
-					editItem: this.editItems
+					editItem: this.editItems,
+					deleteCart: this.deleteCart,
+					searchItems: this.searchItems
 				}}>
 					{this.props.children}
 			</Context.Provider>
