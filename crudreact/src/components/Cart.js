@@ -7,7 +7,7 @@ const Cart = ({cart, deleteCart}) => {
 	return (
 <React.Fragment>
 
-<div className="modal fade" id="cartModal" tabindex="-1" role="dialog" aria-labelledby="cartModalLabel" aria-hidden="true">
+<div className="modal fade" id="cartModal" role="dialog" aria-labelledby="cartModalLabel" aria-hidden="true">
 <div className="modal-dialog" role="document">
 <div className="modal-content">
 	<div className="modal-header">

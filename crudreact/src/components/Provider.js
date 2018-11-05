@@ -156,8 +156,7 @@ class Provider extends React.Component {
 					addCart: this.addCart,
 					addItem: this.addItem,
 					editItem: this.editItems,
-					deleteCart: this.deleteCart,
-					searchItems: this.searchItems
+					deleteCart: this.deleteCart					
 				}}>
 					{this.props.children}
 			</Context.Provider>

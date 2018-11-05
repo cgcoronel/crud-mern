@@ -1,8 +1,6 @@
 import React from 'react';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
-import swal from 'sweetalert2';
 
-import API from './api';
 import Header from './Header/Header';
 import Footer from './Footer';
 import SingleItem from './Item/SingleItem';
@@ -55,7 +53,7 @@ class Router extends React.Component {
 															cart={value.state.cart}
 															deleteCart={value.deleteCart}
 														/>
-													<br/><br/><br/><br/>													
+													<br/><br/><br/><br/>
 													<Switch>
 
 																<Route exact path='/' component={List}/>
