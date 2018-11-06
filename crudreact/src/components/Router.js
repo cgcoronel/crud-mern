@@ -60,11 +60,8 @@ class Router extends React.Component {
 
 																<Route exact path='/item/:id' render={(props) => {
 																			 	let id = props.match.params.id;
-
 																				const items = value.state.items;
-
-																				let filtro;
-																				filtro = items.filter(item => ( item._id === id ));
+																				let filtro = items.filter(item => ( item._id === id ));
 
 																				return (
 																					<SingleItem item={filtro[0]} />
@@ -83,7 +80,7 @@ class Router extends React.Component {
 																					return (
 																						<Edit
 																								item={filtro[0]}
-																								editItem={this.editItem}
+																								editItem={value.editItem}
 																							/>
 																					)
 																			}}/>

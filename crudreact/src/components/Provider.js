@@ -16,28 +16,19 @@ class Provider extends React.Component {
 	}
 
 	componentDidMount(){
+    if(localStorage.getItem('cart')){
+      const cart = JSON.parse(localStorage.getItem('cart'));
+      this.setState({cart});
+    }
 		this.getItems();
-	}
+  }
 
 	getItems = () => {
 		API.get('/items')
 			.then(res => {
-					this.setState({
-						items: res.data.items
-					});
+					const {items} = res.data;
+					this.setState({items});
 			})
-	}
-
-	searchItems = (search) => {
-	  if(search.length > 3) {
-			this.setState({
-				searchFilter: search
-			});
-		} else {
-			this.setState({
-				searchFilter: ''
-			});
-		}
 	}
 
 	deleteItem = (id) => {
@@ -49,15 +40,15 @@ class Provider extends React.Component {
 					 'Se borró correctamente',
 					 'success'
 					);
-					let resultado = this.state.items.filter(item => (
-						item._id !== id
-					))
+					let items = this.state.items.filter(item => ( item._id !== id ));
 
-					this.setState({
-						items: resultado
-					})
+					this.setState({items});
 				} else {
-
+					swal(
+					 'Atención',
+					 'Hubo un error al borrar el item, intente nuevamente',
+					 'warning'
+					);
 				}
 			})
 	}
@@ -79,7 +70,7 @@ class Provider extends React.Component {
 					const itemEdit = items.findIndex(item => id === item._id)
 
 					items[itemEdit] = res.data.item;
-					this.setState({ items });
+					this.setState({items});
 				} else {
 					swal(
 					 'Atención',
@@ -114,19 +105,17 @@ class Provider extends React.Component {
 	addCart = (id) => {
 		const items = [...this.state.items];
 		const item = items.findIndex(item => id === item._id);
-
-		this.setState({
-			cart: [...this.state.cart, items[item]]
-		});
+		const cart = [...this.state.cart, items[item]];
+		localStorage.setItem('cart', JSON.stringify(cart));
+		this.setState({ cart });
 	}
 
 	deleteCart = (id) => {
 		console.log(id);
-		const cart = [...this.state.cart];
-
-		this.setState({
-			cart: cart.filter(item => id !== item._id)
-		});
+		const carts = [...this.state.cart];
+		const cart = carts.filter(item => id !== item._id)
+		localStorage.setItem('cart', JSON.stringify(cart));
+		this.setState({ cart });
 	}
 
 	searchItems = (searchFilter) => {
@@ -135,13 +124,16 @@ class Provider extends React.Component {
 			let result = [];
 
 			if (searchFilter !== '') {
-				result = items.filter(item => (
-					item.title.toLowerCase().indexOf( searchFilter.toLowerCase() ) !== -1
-				));
 
 			} else {
 				result = items;
 			}
+
+			result = (searchFilter !== '') ?
+				items.filter(item => (
+					item.title.toLowerCase().indexOf( searchFilter.toLowerCase() ) !== -1
+				))
+				: items;
 
 			this.setState({ result, searchFilter });
 	}
@@ -155,8 +147,8 @@ class Provider extends React.Component {
 					deleteItem: this.deleteItem,
 					addCart: this.addCart,
 					addItem: this.addItem,
-					editItem: this.editItems,
-					deleteCart: this.deleteCart					
+					editItem: this.editItem,
+					deleteCart: this.deleteCart
 				}}>
 					{this.props.children}
 			</Context.Provider>
