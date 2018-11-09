@@ -1,6 +1,6 @@
-import axios from 'axios';
 import API from '../../components/api';
 
+import type from './type';
 
 export const getItems = () => dispatch => {
 	dispatch({
@@ -16,31 +16,18 @@ export const deleteItem = (id) => dispatch => {
 	})
 }
 
+export const editItem = (formData) => dispatch => {
+	const id = formData.get('_id');
 
-editItem = (formData) => {
-	const _id = formData.get('_id');
+	dispatch({
+		type: type.EDIT_ITEM,
+		payload: API.put(`/item/${id}`, formData)
+	})
+}
 
-	API.put(`/item/${_id}`, formData)
-		.then(res => {
-			if (res.status===200){
-				swal(
-				 'Item Actualizado',
-				 'Se guardó correctamente',
-				 'success'
-				);
-
-				let id = res.data.item._id;
-				const items = [...this.state.items]
-				const itemEdit = items.findIndex(item => id === item._id)
-
-				items[itemEdit] = res.data.item;
-				this.setState({items});
-			} else {
-				swal(
-				 'Atención',
-				 'Hubo un error al guardar, intente nuevamente',
-				 'warning'
-				);
-			}
-		});
+export const addItem = (formData) => dispatch => {
+	dispatch({
+		type: type.ADD_ITEM,
+		payload: API.post(`/item`, formData)
+	})
 }

@@ -8,7 +8,7 @@ export { Context };
 
 class Provider extends React.Component {
 	state =  {
-		items: [],
+		//items: [],
 		result: [],
 		cart: [],
 		searchFilter: '',
@@ -20,16 +20,16 @@ class Provider extends React.Component {
       const cart = JSON.parse(localStorage.getItem('cart'));
       this.setState({cart});
     }
-		this.getItems();
+		//this.getItems();
   }
 
-	getItems = () => {
+	/*getItems = () => {
 		API.get('/items')
 			.then(res => {
 					const {items} = res.data;
 					this.setState({items});
 			})
-	}
+	}*/
 
 	deleteItem = (id) => {
 		API.delete(`/item/${id}`)

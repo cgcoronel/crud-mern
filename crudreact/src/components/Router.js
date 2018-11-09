@@ -9,9 +9,6 @@ import Edit from './Item/Edit';
 import List from './List';
 import Error from './Error';
 
-
-import {Context} from './Provider';
-
 class Router extends React.Component {
 /*
 	state = {
@@ -43,55 +40,14 @@ class Router extends React.Component {
 			<BrowserRouter>
 				<div className='container'>
 					<div className='row justify-content-center'>
-							<Context.Consumer>
-									{
-										(value) => {
-										return (
-
-											<React.Fragment>
-													<Header
-															cart={value.state.cart}
-															deleteCart={value.deleteCart}
-														/>
-													<br/><br/><br/><br/>
-													<Switch>
-
-																<Route exact path='/' component={List}/>
-
-																<Route exact path='/item/:id' render={(props) => {
-																			 	let id = props.match.params.id;
-																				const items = value.state.items;
-																				let filtro = items.filter(item => ( item._id === id ));
-
-																				return (
-																					<SingleItem item={filtro[0]} />
-																				)
-																		}}/>
-
-																<Route exact path='/add' component={ItemForm}/>
-
-																<Route exact path='/edit/:id' render={(props) => {
-																				 	let id = props.match.params.id;
-
-																					const items = value.state.items;
-																					let filtro;
-																					filtro = items.filter(item => ( item._id === id ));
-
-																					return (
-																						<Edit
-																								item={filtro[0]}
-																								editItem={value.editItem}
-																							/>
-																					)
-																			}}/>
-																	<Route component={Error} />
-
-																</Switch>
-															</React.Fragment>
-														)
-							}
-						}
-							</Context.Consumer>
+						<Header/>
+						<Switch>
+									<Route exact path='/'         component={List} />
+									<Route exact path='/item/:id' component={SingleItem} />
+									<Route exact path='/add'      component={ItemForm} />
+									<Route exact path='/edit/:id' component={Edit} />
+									<Route                        component={Error} />
+						</Switch>
 					</div>
 
 					<Footer

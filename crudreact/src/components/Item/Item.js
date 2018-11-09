@@ -32,7 +32,6 @@ class Item extends React.Component {
 	}
 
 	addCart = () => {
-		const {_id} = this.props.info;
 		swal({
 			title: 'Agregar producto al carrito?',
 			text: 'Esta acción no se puede deshacer!',
@@ -44,8 +43,8 @@ class Item extends React.Component {
 			cancelButtonText: 'Cancelar'
 		}).then(
 			(result) => {
-				if (result.value) {					
-					this.props.addCart(_id);
+				if (result.value) {
+					this.props.addItemCart(this.props.info);
 					swal(
 						'Agregado!',
 						'El producto fue agregado al carrito.',

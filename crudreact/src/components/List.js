@@ -1,51 +1,61 @@
 import React from 'react';
 import Item from './Item/Item';
-import {Context} from './Provider';
+import {getItems, deleteItem} from '../redux/actions/ItemActions';
+import {getItemsCart, addItemCart} from '../redux/actions/ItemCartActions';
+
+import {connect} from 'react-redux';
 
 class List extends React.Component {
 
-	showItems = (value) => {
+	componentDidMount(){
+			this.props.getItems();
+			this.props.getItemsCart();
+	}
 
-			const {items, result, searchFilter} = value.state;
+	showItems = () => {
+		//const {items, result, searchFilter} = this.props.items;
+		const {items} = this.props.items;
 
-			if (items.length === 0) return null;
+		if (!items) return null;
 
-			const res = (searchFilter !== '') ? [...result] : [...items];
+		//const res = (searchFilter !== '') ? [...result] : [...items];
+		const itemsActive = [...items];
 
-			return (
-				<React.Fragment>
-					{
-						Object.keys(res).map(
+		return (
+				Object.keys(itemsActive).map(
 						item => (
 						<Item
 								key={item}
-								info={res[item]}
-								deleteItem={value.deleteItem}
-								addCart={value.addCart}
+								info={itemsActive[item]}
+								deleteItem={this.props.deleteItem}
+								addItemCart={this.props.addItemCart}
 								/>
 						)
-					)}
-				</React.Fragment>
 			)
+		)
 	}
 
 	render () {
 		return (
-			<Context.Consumer>
-				{
-					(value) => {
-						return (
-							<div className='col-12'>
-								<div className="row">
-									{this.showItems(value)}
-								</div>
-							</div>
-						)
-					}
-				}
-			</Context.Consumer>
+			<div className='col-12'>
+				<div className="row">
+					{this.showItems()}
+				</div>
+			</div>
 		)
 	}
 }
 
-export default List;
+const mapStateToProps = ({ items, itemsCart }) => {
+	return {
+		items,
+		itemsCart
+	}
+}
+
+export default connect(mapStateToProps, {
+	getItems,
+	deleteItem,
+	getItemsCart,
+	addItemCart
+})(List);

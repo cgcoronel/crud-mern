@@ -1,14 +1,15 @@
 import React from 'react';
+import {connect} from 'react-redux';
 import { URL } from '../api';
 import './SingleItem.css';
 import { Link } from 'react-router-dom';
 
 class SingleItem extends React.Component {
 
-	showItem = (props) => {
-		if (!props.item) return null;
+	showItem = (item) => {
+		if (!item) return null;
 
-		const {title, description, valor, image} = this.props.item;
+		const {title, description, valor, image} = item;
 
 		return (
 			<React.Fragment>
@@ -35,12 +36,18 @@ class SingleItem extends React.Component {
 		)
 	}
 	render () {
+		let id = this.props.match.params.id;
+		const {items} = this.props.items;
+		let item = items.filter(item => ( item._id === id ));
+
 		return (
 			<div className='col-12 col-md-8'>
-				{this.showItem(this.props)}
+				{this.showItem(item[0])}
 			</div>
 		)
 	}
 }
 
-export default SingleItem;
+const mapStateToProps = ({ items }) => ({ items })
+
+export default connect(mapStateToProps, {})(SingleItem);

@@ -105,7 +105,7 @@ function deleteItem(req, res){
 				if (err) {
 					res.status(500).send({message: 'Error al borrar el Item'});
 				} else {
-					res.status(200).send({message: 'El Item se ha eliminado'});
+					res.status(200).send({item});
 				}
 			});
 		}

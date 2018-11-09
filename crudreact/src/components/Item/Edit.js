@@ -1,6 +1,8 @@
 import React from 'react';
+import {connect} from 'react-redux';
 import { Link } from 'react-router-dom';
 import { URL } from '../api';
+import {editItem} from '../../redux/actions/ItemActions';
 
 class Edit extends React.Component {
 
@@ -13,22 +15,21 @@ class Edit extends React.Component {
 		selectedFile: null
 	}
 
-	editItem = (e) => {
-		e.preventDefault();
-
+	editItem = () => {
+		let id = this.props.match.params.id;
 		const fd = new FormData();
-
 		const file = this.state.selectedFile;
-		if (file != null) {
+
+		if (file) {
 			fd.append('image', file, file.name);
 		} else {
-			fd.append('image_name', this.props.item.image);
+			fd.append('image_name', this.image.current.value);
 		}
 
 		fd.append('title', this.title.current.value);
 		fd.append('description', this.description.current.value);
 		fd.append('valor', this.valor.current.value);
-		fd.append('_id', this.props.item._id);
+		fd.append('_id', id);
 
 		this.props.editItem(fd);
 	}
@@ -39,15 +40,19 @@ class Edit extends React.Component {
 		});
 	}
 
+	showForm = () => {
 
-	loadForm = () => {
+		let id = this.props.match.params.id;
+		const items = this.props.items.items;
 
-		if (!this.props.item) {
-			return null;
-		}
-		const {title, description, valor, image} = this.props.item;
+		const item = items.filter(item => ( item._id === id ));
+
+		if (!item[0]) return null;
+
+		const {title, description, valor, image} = item[0];
+
 		return (
-			<form onSubmit={this.editItem} className='col-8'>
+			<form className='col-8'>
 				<legend className='text-center'>Editar Item</legend>
 				<div className='container-singleitem row'>
 					<div className="col-lg">
@@ -55,6 +60,7 @@ class Edit extends React.Component {
 							 <img className="card-img-top" src={`${URL}image/${image}`} alt='vacio' />
 									<div className="custom-file mt-3">
 										<input type="file" className="custom-file-input" onChange={this.fileSelectedHandler} />
+										<input type='hidden' ref={this.image} defaultValue={image}/>
 										<label className="custom-file-label">Seleccione una Imagen</label>
 									</div>
 						 </div>
@@ -80,7 +86,7 @@ class Edit extends React.Component {
 					 </div>
 				</div>
 				<div className='container-singleitem row float-right'>
-					<button type='submit' className='btn btn-primary mt-3'>Save</button>
+					<button type='button' onClick={this.editItem} className='btn btn-primary mt-3'>Save</button>
 					&nbsp;<Link to={`/`} className='btn btn-warning btn-md mt-3'>Cancelar</Link>
 				</div>
 			</form>
@@ -88,14 +94,15 @@ class Edit extends React.Component {
 	}
 
 	render () {
-
 		return (
 			<React.Fragment>
-					{this.loadForm()}
+					{this.showForm()}
 			</React.Fragment>
-
 		)
 	}
 }
 
-export default Edit;
+
+const mapStateToProps = ({ items }) => ({items})
+
+export default connect(mapStateToProps, { editItem })(Edit);
