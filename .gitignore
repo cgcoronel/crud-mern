@@ -2,8 +2,10 @@
 
 # dependencies
 /server/node_modules
+/server/uploads
 /crudreact/node_modules
 /server/data/db/
+
 
 # testing
 /server/coverage
