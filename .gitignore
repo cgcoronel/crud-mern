@@ -2,7 +2,7 @@
 
 # dependencies
 /server/node_modules
-/server/uploads
+/server/uploads/*
 /crudreact/node_modules
 /server/data/db/
 
