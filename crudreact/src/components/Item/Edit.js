@@ -1,6 +1,7 @@
 import React from 'react';
 import {connect} from 'react-redux';
 import { Link } from 'react-router-dom';
+import swal from 'sweetalert2';
 import { URL } from '../api';
 import {editItem} from '../../redux/actions/ItemActions';
 
@@ -16,22 +17,46 @@ class Edit extends React.Component {
 	}
 
 	editItem = () => {
-		let id = this.props.match.params.id;
-		const fd = new FormData();
-		const file = this.state.selectedFile;
+		swal({
+			title: 'Estas seguro?',
+			text: 'Esta acción no se puede deshacer!',
+			type: 'warning',
+			showCancelButton: true,
+			confirmButtonColor: '#3085d6',
+			cancelButtonColor: '#d33',
+			confirmButtonText: 'Si, Guardar!',
+			cancelButtonText: 'Cancelar'
+		}).then(
+			(result) => {
+				if (result.value) {
+					let id = this.props.match.params.id;
+					const fd = new FormData();
+					const file = this.state.selectedFile;
 
-		if (file) {
-			fd.append('image', file, file.name);
-		} else {
-			fd.append('image_name', this.image.current.value);
-		}
+					if (file) {
+						fd.append('image', file, file.name);
+					} else {
+						fd.append('image_name', this.image.current.value);
+					}
 
-		fd.append('title', this.title.current.value);
-		fd.append('description', this.description.current.value);
-		fd.append('valor', this.valor.current.value);
-		fd.append('_id', id);
+					fd.append('title', this.title.current.value);
+					fd.append('description', this.description.current.value);
+					fd.append('valor', this.valor.current.value);
+					fd.append('_id', id);
 
-		this.props.editItem(fd);
+					this.props.editItem(fd);
+					swal(
+						'Guardado!',
+						'El item ha sido guardado correctamente',
+						'success'
+					).then(
+						result => {
+							this.props.history.push('/')
+						}
+					);
+				}
+			}
+		)
 	}
 
 	fileSelectedHandler = event => {
@@ -44,7 +69,6 @@ class Edit extends React.Component {
 
 		let id = this.props.match.params.id;
 		const items = this.props.items.items;
-
 		const item = items.filter(item => ( item._id === id ));
 
 		if (!item[0]) return null;
