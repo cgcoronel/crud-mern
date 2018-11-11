@@ -4,6 +4,11 @@ import {getItems, deleteItem} from '../redux/actions/ItemActions';
 import {getItemsCart, addItemCart} from '../redux/actions/ItemCartActions';
 
 import {connect} from 'react-redux';
+import store from '../store';
+
+store.subscribe( () => {
+		localStorage.setItem('cart', JSON.stringify(store.getState()));
+});
 
 class List extends React.Component {
 
@@ -13,13 +18,11 @@ class List extends React.Component {
 	}
 
 	showItems = () => {
-		//const {items, result, searchFilter} = this.props.items;
-		const {items} = this.props.items;
+		const {items, searchItems, searchFilter} = this.props.items;
 
 		if (!items) return null;
 
-		//const res = (searchFilter !== '') ? [...result] : [...items];
-		const itemsActive = [...items];
+		const itemsActive = (searchFilter !== '') ? [...searchItems] : [...items];
 
 		return (
 				Object.keys(itemsActive).map(

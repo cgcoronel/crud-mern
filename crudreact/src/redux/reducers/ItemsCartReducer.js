@@ -12,8 +12,7 @@ export default (state=initialState, action)=>{
 					return {
 						...state,
 						itemsCart: state.itemsCart.filter(item => item._id !== action.payload)
-					}
-					return state
+					}				
 			case type.ADD_ITEM_CART:
 					return {
 						...state,

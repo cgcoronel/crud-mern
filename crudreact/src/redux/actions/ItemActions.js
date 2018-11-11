@@ -31,3 +31,10 @@ export const addItem = (formData) => dispatch => {
 		payload: API.post(`/item`, formData)
 	})
 }
+
+export const searchItems = (searchFilter) => {
+	return {
+		type: type.SEARCH_ITEMS,
+		payload: searchFilter
+	}
+}

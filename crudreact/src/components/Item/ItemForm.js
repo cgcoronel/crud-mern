@@ -4,7 +4,6 @@ import swal from 'sweetalert2';
 import { Link } from 'react-router-dom';
 import { URL } from '../api';
 import {addItem} from '../../redux/actions/ItemActions';
-import {Context} from '../Provider';
 
 class ItemForm extends React.Component {
 

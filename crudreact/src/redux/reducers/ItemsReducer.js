@@ -1,7 +1,9 @@
 import type from '../actions/type';
 
 const initialState = {
-	items: []
+	items: [],
+	searchItems: [],
+	searchFilter: ''
 }
 
 export default (state=initialState, action)=>{
@@ -28,6 +30,21 @@ export default (state=initialState, action)=>{
 						...state,
 						items: [...state.items, action.payload]
 					}
+			case type.SEARCH_ITEMS:
+					const res = [...state.items];
+
+					let searchItems = (action.payload !== '') ?
+						res.filter(item => (
+							item.title.toLowerCase().indexOf( action.payload.toLowerCase() ) !== -1
+						))
+						: res;
+
+					return {
+						...state,
+						searchItems: searchItems,
+						searchFilter: action.payload
+					}
+
 			default:
 					return state
 		}
