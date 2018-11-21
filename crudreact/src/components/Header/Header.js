@@ -53,8 +53,6 @@ class Header extends React.Component {
 
 
 				</nav>
-
-				<br/><br/><br/><br/><br/>
 			</header>
 		)
 	}

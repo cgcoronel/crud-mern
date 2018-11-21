@@ -38,23 +38,25 @@ class Router extends React.Component {
 
 		return (
 			<BrowserRouter>
-				<div className='container'>
+				<React.Fragment>
 					<div className='row justify-content-center'>
 						<Header/>
-						<Switch>
-									<Route exact path='/'         component={List} />
-									<Route exact path='/item/:id' component={SingleItem} />
-									<Route exact path='/add'      component={ItemForm} />
-									<Route exact path='/edit/:id' component={Edit} />
-									<Route                        component={Error} />
-						</Switch>
+						<div className='container'>
+							<Switch>
+										<Route exact path='/'         component={List} />
+										<Route exact path='/item/:id' component={SingleItem} />
+										<Route exact path='/add'      component={ItemForm} />
+										<Route exact path='/edit/:id' component={Edit} />
+										<Route                        component={Error} />
+							</Switch>
+						</div>
 					</div>
 
 					<Footer
 								pagePrev={this.pagePrev}
             		pageNext={this.pageNext}
 							/>
-				</div>
+					</React.Fragment>
 			</BrowserRouter>
 		)
 	}
